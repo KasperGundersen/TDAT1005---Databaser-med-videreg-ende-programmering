@@ -1,0 +1,36 @@
+/*
+Øving 14 - TDAT1005 Databaser med videregående programmering(2019 vår)
+http://www.aitel.hist.no/fag/vprg/TDAT1005/ovinger/TDAT1005_normalisering.php
+*/
+
+--Oppgave 1. a) Hvilken normalform (1NF, 2NF, 3NF, BCNF) tilfredsstiller relasjonen (tabellen) under?
+ Tabellen er på normalform 1NF. Det eksisterer en primærnøkkel, og ingen del av tabellen er NULL.
+ Tabellen inneholder ikke repeterende grupper.   - Kun én verdi i hver rute i tabellen.
+
+
+-- Oppgave 1. b) Forklar hvilke konkrete ulemper som kan oppstå ved at relasjonen ikke er normalisert.
+Det kan oppstå dobbeltlagring av data(redundans). Uten normalisering får man ikke
+et tydelig bilde av de funskjonelle avhegnighetene
+
+-- Oppgave 1. c)
+{Ssn(PK), Navn, adresse, klassenavn(FK)}
+{kursID(PK), kursnavn, eksamensdato, ssn(FK)}
+{klassenavn(PK), studieretning}
+-- Første normalform (1NF): Det eksisterer en primærnøkkel, og ingen del av denne er NULL.
+-- Andre normalform (2NF): Den har ingen partielle avhengigheter. Partiell avhengighet: Betyr at en verdi er avhengig av kun deler av primærnøkkelen
+-- 3NF: Transitive avhengigheter fjernes. Klassenavn ble lagt i en egen tabell
+-- BNCF: tabellen har bare én kandidatnøkkel, er 3NF og BCNF ekvivalente.
+
+Oppgave 2
+
+-- Kandidatnøkler:  kunde_id, eier_id og eiendoms_id, (kunde_id, eiendoms_id, fra_uke, til_uke)
+--Problem med sletting: Det er flere verdier som er avhengige av hverandre, siden tabellen
+-- er en stor og sammensatt tabell. Derfor kan flere verdier slettes når man prøver å slette én verdi
+
+-- Problem med registrering: registrering blir et problem fordi man må registrere alle 13 verdiene for hver gang
+-- man ønsker å registrere en ny leieforhold
+
+kunde {kunde_id(PK), navn, adresse, telefon, eiendoms_id(FK)}
+eier {eier_id(PK), navn, adresse, telefon}
+eiendom {eiendoms_id(PK), adresse, eier_id(FK)}
+utleierforhold{(fra_uke,kunde_id(FK), eiendom_id(FK))(PK), til_uke, pris}
